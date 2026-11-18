@@ -42,6 +42,8 @@ O lockfile fixa as dependências transitivas. Supabase JS foi fixado na versão 
 
 ## Pendências verificáveis
 
+O workflow foi enviado ao GitHub. A [primeira execução](https://github.com/valneymaia/Maia_ofertas-web/actions/runs/44378689500) não recebeu runner nem iniciou etapas: o GitHub informou que a conta está bloqueada por um problema de cobrança. Isso impede validar o CI remoto até a regularização da conta. Os resultados acima são das verificações locais reais.
+
 Não foi possível executar o fluxo com Supabase real ou RLS local: não foram fornecidos projeto/chaves e o daemon Docker local não está ativo. Há migration, harness de RLS e E2E administrativo completos para executar no banco isolado antes de publicar. Os testes com mocks não são apresentados como verificação real de Supabase.
 
 Não foram medidos Lighthouse/Core Web Vitals nem feita revisão integral com leitor de tela. Não há domínio, configuração de contato real ou deploy Vercel provisionado. O README explica esses passos. Os textos de privacidade/termos devem refletir os fornecedores e dados reais do deploy.

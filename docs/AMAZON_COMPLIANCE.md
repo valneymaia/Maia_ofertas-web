@@ -9,7 +9,7 @@ Revisão de implementação em 18/11/2026. Esta documentação registra as escol
 - URL final e tag preservadas. Os dois links fornecidos foram verificados por respostas de redirecionamento em `link.amazon` → `amzlinks.in` → `www.amazon.com.br`; não foi necessário carregar páginas de produto.
 - Produtos recebidos: PS5 `B0FPGF9J2J` e Samsung `B0GM1XDLLM`. Tag presente: `valneymaia05-20`. A titularidade da tag e as condições da conta não são verificáveis só pela URL.
 - Sem preços, descontos, avaliações, disponibilidade ou métricas inventadas.
-- Somente descrições editoriais próprias e ilustrações originais. Imagens externas exigem origem própria/licenciada declarada pelo administrador. Não há scraping, download ou cópia de imagens Amazon.
+- Descrições editoriais próprias e ilustrações originais. A pedido do proprietário, imagens também podem ser encontradas em metatags ou no atributo da imagem principal da página Amazon. As duas páginas fornecidas não tinham `og:image`: foi usado `landingImage.src`. A URL original é incorporada diretamente, sem baixar ou transformar o arquivo no servidor. A origem `amazon_metadata` não é comprovação de licença; a autorização e os termos da conta precisam ser revisados pelo responsável antes de publicação. Não há contorno de CAPTCHA, bloqueios ou coleta de preços.
 - O site se declara independente. O vendedor, entrega e condições devem ser consultados na Amazon.
 
 Antes de publicar, o responsável deve cadastrar o domínio no Programa de Associados, revisar as condições aplicáveis à sua conta e preencher contato e política de privacidade conforme os fornecedores reais.

@@ -26,7 +26,9 @@ O Supabase Auth aplica limites de autenticação. Configure seus limites e CAPTC
 
 O validador exige HTTPS, hosts exatos, caminho de produto, uma tag Brasil, ausência de credenciais, portas e parâmetros de redirecionamento. Não troca a tag. O resolver só faz GET manual de encurtadores explicitamente permitidos, cancela o corpo, valida cada destino antes de segui-lo e para antes de fazer requisição à Amazon. Até cinco saltos e cinco segundos por requisição. Não há endpoint público para resolver endereços.
 
-As descrições são renderizadas como texto React, sem HTML arbitrário. Imagens HTTPS próprias/licenciadas usam `next/image` sem otimização para não transformar conteúdo sem autorização. Nenhum conteúdo é raspado da Amazon. CSP, no-sniff, anti-iframe, política de referência e HSTS são configurados. A CSP usa unsafe-inline para os scripts de hidratação do Next.js; uma evolução possível é CSP com nonce por resposta. Não reivindicamos que isso equivale a uma auditoria de segurança completa.
+As descrições são renderizadas como texto React, sem HTML arbitrário. A pedido do proprietário, o cadastro permite importar somente a URL da imagem dos metadados/página principal Amazon. `htmlparser2` 12.0.0 analisa atributos sem executar scripts; a leitura só consulta o ASIN em host exato, sem tag de associado, timeout de 8s, limite de 3 MB e sem seguir redirecionamentos. Apenas imagens HTTPS em hosts Amazon de mídia permitidos são aceitas. Não há coleta de preço, avaliação, descrição ou outros dados. Bloqueios não são contornados.
+
+As imagens usam `next/image` sem otimização e sem download para armazenamento próprio. A origem `amazon_metadata` distingue essas imagens de conteúdo próprio/licenciado e não comprova licença. Um componente cliente mínimo exibe a ilustração se a imagem externa falhar. CSP, no-sniff, anti-iframe, política de referência e HSTS são configurados. A CSP usa unsafe-inline para os scripts de hidratação do Next.js; uma evolução possível é CSP com nonce por resposta. Não reivindicamos que isso equivale a uma auditoria de segurança completa.
 
 ## Cache e atualização
 

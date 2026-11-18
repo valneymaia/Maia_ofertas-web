@@ -33,15 +33,13 @@ describe('resolução segura sem navegação ao destino', () => {
     expect(request).toHaveBeenCalledTimes(1);
   });
   it('limita loops', async () => {
-    const request = vi
-      .fn()
-      .mockImplementation(
-        async () =>
-          new Response(null, {
-            status: 302,
-            headers: { location: 'https://link.amazon/B0929exza' },
-          }),
-      );
+    const request = vi.fn().mockImplementation(
+      async () =>
+        new Response(null, {
+          status: 302,
+          headers: { location: 'https://link.amazon/B0929exza' },
+        }),
+    );
     await expect(resolveAffiliateUrl('https://link.amazon/B0929exza', request)).rejects.toThrow(
       'limite',
     );

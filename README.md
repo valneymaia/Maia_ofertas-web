@@ -21,8 +21,8 @@ Para dados fictícios de layout, crie `.env.local` com `DEMO_MODE=true`. A demon
 
 1. Crie um projeto Supabase sob sua conta.
 2. Copie `.env.example` para `.env.local`. Preencha `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` e `NEXT_PUBLIC_SITE_URL` (local: `http://localhost:3000`). A chave é a pública `anon`, nunca `service_role`.
-3. No SQL Editor, execute `supabase/migrations/202611180001_catalog.sql`. Alternativamente, com Supabase CLI instalada: `supabase link --project-ref SEU_PROJECT_REF` e `supabase db push`.
-4. **Opcional:** execute `supabase/seed.sql` para publicar os dois produtos enviados nesta solicitação. As URLs completas mantêm os parâmetros e a tag originais. Não contém preços nem imagens copiadas.
+3. No SQL Editor, execute os arquivos de `supabase/migrations/` em ordem: `202611180001_catalog.sql` e depois `202611180002_amazon_metadata_images.sql`. Alternativamente, com Supabase CLI instalada: `supabase link --project-ref SEU_PROJECT_REF` e `supabase db push`.
+4. **Opcional:** execute `supabase/seed.sql` para publicar os dois produtos enviados nesta solicitação. As URLs completas mantêm os parâmetros e a tag originais. As imagens usam os endereços originais da Amazon; não são baixadas para o servidor. Não contém preços.
 5. Em Authentication → Users, crie manualmente seu usuário administrador com e-mail e senha. Desative cadastros públicos em Authentication → Providers → Email se não forem usados por outros serviços do projeto.
 6. Copie o UUID desse usuário e conceda acesso no SQL Editor:
 
@@ -42,7 +42,7 @@ O servidor verifica até cinco saltos de encurtadores permitidos, com timeout po
 
 Não é possível comprovar que a tag pertence a uma conta usando apenas a URL. Confira no seu painel de Associados a tag e o cadastro deste site. Links curtos que não possam ser verificados são recusados com orientação para usar o link longo.
 
-Imagens: use apenas URL HTTPS de imagem própria/licenciada e selecione a origem. Sem imagem, há uma ilustração original identificada. Não há upload de arquivos nesta versão.
+Imagens: você pode informar uma URL HTTPS própria/licenciada ou marcar **Buscar a imagem do produto no link**. Com o campo de imagem vazio, o servidor consulta apenas a página canônica do produto, sem parâmetros de afiliado, e tenta `og:image`, `twitter:image`, metadados de imagem e a imagem principal `landingImage`, nessa ordem. A origem fica registrada como `amazon_metadata`; isso não é uma declaração de licença. Confira as condições de uso aplicáveis à sua conta antes do deploy. Não há upload ou cópia do arquivo para o servidor. Se a leitura for bloqueada, nenhuma imagem for encontrada ou a imagem falhar no navegador, permanece a ilustração.
 
 ## Comandos
 
@@ -84,4 +84,4 @@ Nenhum deploy de produção foi feito por esta entrega. As chaves e o projeto Su
 
 [Arquitetura](docs/ARCHITECTURE.md) · [Testes](docs/TESTING.md) · [Amazon](docs/AMAZON_COMPLIANCE.md) · [Telegram V2](docs/TELEGRAM_INTEGRATION.md) · [Relatório](docs/IMPLEMENTATION_REPORT.md)
 
-Os objetivos Lighthouse/Web Vitals ainda precisam de medição no deploy real. A gestão lista os 200 produtos mais recentes; o catálogo público tem paginação no servidor. Não há métricas de vendas/comissões/visitantes, scraping de produtos, API de preços ou integração ativa com o bot.
+Os objetivos Lighthouse/Web Vitals ainda precisam de medição no deploy real. A gestão lista os 200 produtos mais recentes; o catálogo público tem paginação no servidor. Não há métricas de vendas/comissões/visitantes, coleta de preços/avaliações, API de preços ou integração ativa com o bot.

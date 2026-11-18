@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from 'next/image';
+import { ProductImage } from './product-image';
 import {
   ArrowUpRight,
   ArrowRight,
@@ -42,28 +42,30 @@ export function ProductVisual({ product, large = false }: { product: Product; la
                 : /caixa de som/.test(title)
                   ? Speaker
                   : Package;
+  const fallback = (
+    <>
+      <span className="visual-orbit" />
+      <Icon
+        className="product-icon"
+        size={large ? 130 : 82}
+        strokeWidth={1.15}
+        aria-hidden="true"
+      />
+      <span className="illustration-label">Ilustração da categoria</span>
+    </>
+  );
   return (
     <div className={`product-visual visual-${hash % 4}${large ? ' large' : ''}`}>
       {product.image_url ? (
-        <Image
-          unoptimized
-          src={product.image_url}
-          alt={product.title}
-          width={480}
-          height={360}
-          loading={large ? 'eager' : 'lazy'}
+        <ProductImage
+          key={product.image_url}
+          url={product.image_url}
+          title={product.title}
+          large={large}
+          fallback={fallback}
         />
       ) : (
-        <>
-          <span className="visual-orbit" />
-          <Icon
-            className="product-icon"
-            size={large ? 130 : 82}
-            strokeWidth={1.15}
-            aria-hidden="true"
-          />
-          <span className="illustration-label">Ilustração da categoria</span>
-        </>
+        fallback
       )}
     </div>
   );

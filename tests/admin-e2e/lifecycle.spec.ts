@@ -38,6 +38,7 @@ test('administrador cria rascunho, publica e arquiva', async ({ page, browser })
     await categoryForm.getByRole('button', { name: 'Salvar categoria' }).click();
     await expect(categoryForm.getByRole('status')).toHaveText('Categoria salva.');
     await page.goto('/admin/produtos/novo');
+    await page.getByRole('checkbox', { name: /Buscar a imagem do produto/ }).uncheck();
     await page.getByLabel('Nome do produto').fill(`Produto E2E ${suffix}`);
     await page.getByLabel('Endereço amigável (slug)').fill(slug);
     await page

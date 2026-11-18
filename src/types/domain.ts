@@ -15,7 +15,7 @@ export type Product = {
   asin: string | null;
   affiliate_url: string;
   image_url: string | null;
-  image_source: 'placeholder' | 'own' | 'licensed';
+  image_source: 'placeholder' | 'own' | 'licensed' | 'amazon_metadata';
   category_id: string;
   is_featured: boolean;
   status: 'draft' | 'published' | 'archived';

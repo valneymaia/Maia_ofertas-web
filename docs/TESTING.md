@@ -17,7 +17,7 @@ O runner inicia desenvolvimento na porta 3100, sem credenciais de produção. Us
 
 Se o servidor já estiver aberto com essa configuração na porta 3100, `E2E_EXTERNAL_SERVER=true` executa os mesmos testes sem iniciar/encerrar o processo. Foi usado no Windows para evitar espera na limpeza da árvore de processos do servidor; não altera as asserções nem pula cenários.
 
-Não realiza compras nem abre páginas reais da Amazon. As varreduras axe não cobrem toda a acessibilidade: revisão manual com teclado, leitor de tela e contexto editorial continua necessária. Lighthouse, INP e métricas reais de tráfego não foram medidos nesta entrega.
+Não realiza compras nem abre páginas reais da Amazon. Os pedidos de imagens de mídia Amazon são atendidos por uma fixture local nos testes de navegador, evitando dependência externa. A revisão visual final usa uma captura separada com as URLs de imagem reais e verifica o carregamento. O extrator de imagens também possui testes de prioridade de metatags, fallback para imagem principal, hosts falsos, bloqueio HTTP, tamanho máximo e remoção da tag no pedido de metadados. As varreduras axe não cobrem toda a acessibilidade: revisão manual com teclado, leitor de tela e contexto editorial continua necessária. Lighthouse, INP e métricas reais de tráfego não foram medidos nesta entrega.
 
 ## Banco local e RLS
 

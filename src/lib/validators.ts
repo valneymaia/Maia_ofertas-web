@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { affiliateUrlSchema } from './amazon';
+import { isAmazonImageUrl } from './product-image';
 
 export const slugify = (value: string) =>
   value
@@ -46,12 +47,18 @@ export const productSchema = z
         z.url().refine((v) => new URL(v).protocol === 'https:', 'A imagem precisa usar HTTPS.'),
       ])
       .transform((v) => v || null),
-    image_source: z.enum(['placeholder', 'own', 'licensed']),
+    image_source: z.enum(['placeholder', 'own', 'licensed', 'amazon_metadata']),
     category_id: z.uuid(),
     is_featured: z.boolean(),
     status: z.enum(['draft', 'published', 'archived']),
   })
   .superRefine((v, ctx) => {
+    if (v.image_source === 'amazon_metadata' && (!v.image_url || !isAmazonImageUrl(v.image_url)))
+      ctx.addIssue({
+        code: 'custom',
+        path: ['image_url'],
+        message: 'A imagem da Amazon precisa usar um endereço original permitido.',
+      });
     if (Boolean(v.image_url) !== (v.image_source !== 'placeholder'))
       ctx.addIssue({
         code: 'custom',

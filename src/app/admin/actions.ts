@@ -44,7 +44,11 @@ export async function productAction(
 ): Promise<ActionState> {
   await requireAdmin();
   if (id && !z.uuid().safeParse(id).success) return { error: 'Produto inválido.' };
-  const input = { ...Object.fromEntries(form), is_featured: form.get('is_featured') === 'on' };
+  const input = {
+    ...Object.fromEntries(form),
+    is_featured: form.get('is_featured') === 'on',
+    fetch_image: form.get('fetch_image') === 'on',
+  };
   let result;
   try {
     result = await saveProduct(input, id);

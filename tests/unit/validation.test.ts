@@ -36,7 +36,12 @@ describe('links de associado', () => {
   );
 });
 describe('validações de catálogo', () => {
-  const product = { ...initialProducts[0], asin: initialProducts[0].asin || '', image_url: '' };
+  const product = {
+    ...initialProducts[0],
+    asin: initialProducts[0].asin || '',
+    image_url: '',
+    image_source: 'placeholder',
+  };
   it('valida produto para publicação', () =>
     expect(productSchema.safeParse(product).success).toBe(true));
   it('rejeita ASIN divergente', () =>

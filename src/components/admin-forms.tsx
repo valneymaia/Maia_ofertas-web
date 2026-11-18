@@ -172,16 +172,14 @@ export function ProductForm({
       </div>
       <div className="form-grid">
         <div>
-          <label htmlFor="image_url">Imagem própria ou licenciada (URL HTTPS)</label>
+          <label htmlFor="image_url">Imagem do produto (URL HTTPS, opcional)</label>
           <input
             id="image_url"
             name="image_url"
             type="url"
             defaultValue={product?.image_url || ''}
           />
-          <small>
-            Não copie imagens das páginas da Amazon. Deixe vazio para usar uma ilustração.
-          </small>
+          <small>Informe uma imagem permitida ou deixe vazio para buscar a imagem no link.</small>
         </div>
         <div>
           <label htmlFor="image_source">Origem da imagem</label>
@@ -193,9 +191,17 @@ export function ProductForm({
             <option value="placeholder">Ilustração padrão (sem URL)</option>
             <option value="own">Imagem própria</option>
             <option value="licensed">Imagem licenciada</option>
+            <option value="amazon_metadata">Imagem encontrada na página Amazon</option>
           </select>
         </div>
       </div>
+      <label className="checkbox">
+        <input type="checkbox" name="fetch_image" defaultChecked={!product || !product.image_url} />{' '}
+        Buscar a imagem do produto no link quando o campo estiver vazio
+      </label>
+      <small>
+        Se a página não permitir a leitura ou não tiver imagem, usamos a ilustração padrão.
+      </small>
       <div className="form-grid">
         <div>
           <label htmlFor="status">Status</label>

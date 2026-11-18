@@ -2,6 +2,14 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 test.beforeEach(async ({ page }) => {
   await page.route(/https:\/\/(?:www\.)?amazon\.com\.br\//, (route) => route.abort());
+  await page.route(
+    /https:\/\/(?:m\.media-amazon\.com|images-(?:na|eu)\.ssl-images-amazon\.com)\//,
+    (route) =>
+      route.fulfill({
+        contentType: 'image/svg+xml',
+        body: '<svg xmlns="http://www.w3.org/2000/svg" width="480" height="360"><rect width="480" height="360" fill="#eef2ed"/></svg>',
+      }),
+  );
 });
 test('homepage, busca, categoria e link direto sem navegação automática', async ({ page }) => {
   let outbound = 0;

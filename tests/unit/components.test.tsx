@@ -1,11 +1,16 @@
 import React from 'react';
 import { describe, expect, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { ProductCard, EmptyState, AmazonOutboundLink } from '@/components/products';
 import { initialProducts } from '@/data/initial-offers';
+import { ProductImage } from '@/components/product-image';
 describe('vitrine', () => {
   it('renderiza produto sem imagem com ação explícita', () => {
-    render(<ProductCard product={initialProducts[0]} />);
+    render(
+      <ProductCard
+        product={{ ...initialProducts[0], image_url: null, image_source: 'placeholder' }}
+      />,
+    );
     const link = screen.getByRole('link', { name: /Ver na Amazon/ });
     expect(link).toHaveAttribute('href', initialProducts[0].affiliate_url);
     expect(link).toHaveAttribute('rel', 'sponsored nofollow noopener');
@@ -34,5 +39,17 @@ describe('vitrine', () => {
     );
     expect(container.querySelector('script')).toBeNull();
     expect(screen.getByRole('heading')).toHaveTextContent('<script>alert(1)</script>');
+  });
+  it('volta à ilustração se a imagem externa falhar', () => {
+    render(
+      <ProductImage
+        url={initialProducts[0].image_url!}
+        title="Imagem do produto"
+        large={false}
+        fallback={<span>Ilustração de reserva</span>}
+      />,
+    );
+    fireEvent.error(screen.getByRole('img'));
+    expect(screen.getByText('Ilustração de reserva')).toBeVisible();
   });
 });

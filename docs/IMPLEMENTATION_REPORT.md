@@ -6,7 +6,7 @@ Repositório inicialmente vazio. Implementadas vitrine responsiva, busca, filtro
 
 Painel com login Supabase, concessão explícita de administrador, indicadores calculados no banco, criação/edição de produto, prévia de texto, rascunho, publicação, despublicação, arquivamento e gestão de categorias. Não há cadastro público de administrador. Não é necessário usar chave service_role na aplicação.
 
-Os links enviados repetidamente foram deduplicados. Os dois destinos verificados são PS5 e Samsung WindFree, com tag `valneymaia05-20`. Há uma carga SQL opcional para eles e uma prévia local sem banco. A URL final completa é preservada. Não copiamos preços ou imagens Amazon.
+Os links enviados repetidamente foram deduplicados. Os dois destinos verificados são PS5 e Samsung WindFree, com tag `valneymaia05-20`. Há uma carga SQL opcional para eles e uma prévia local sem banco. A URL final completa é preservada. A pedido posterior do proprietário, os cards passaram a usar os endereços originais das imagens principais. As páginas não forneciam `og:image`, então foi usado `landingImage.src`. Não coletamos preços ou copiamos os arquivos de imagem para o servidor. `htmlparser2` 12.0.0 foi adicionado para leitura segura dos atributos HTML.
 
 A versão 2 poderá importar produtos do Telegram e oferecer aba exclusiva. Isso não foi ativado. **O repositório original do bot permaneceu intacto.**
 
@@ -34,9 +34,9 @@ O lockfile fixa as dependências transitivas. Supabase JS foi fixado na versão 
 - `pnpm install --frozen-lockfile`: concluído.
 - `pnpm lint`: concluído sem erros ou avisos após os ajustes.
 - `pnpm typecheck`: concluído.
-- `pnpm test`: 48 testes passaram em 5 arquivos. Os 5 testes de componentes foram repetidos após o ajuste final das ilustrações e passaram.
+- `pnpm test`: 66 testes passaram em 6 arquivos, incluindo metatags, imagem principal, validação de hosts, limites de leitura e fallback de imagens quebradas.
 - `pnpm build`: concluído com configuração fictícia explícita para build, sem credenciais de produção. Gerou as rotas públicas/administrativas e os recursos de SEO.
-- `pnpm test:e2e`: 7 cenários passaram em 18 segundos, reutilizando o servidor local com `E2E_EXTERNAL_SERVER=true`. Cobrem navegação pública, busca, categoria, detalhes, links, ausência de navegação automática, 404, bloqueio de admin, menu mobile, overflow e axe nas quatro larguras. Os ajustes observados foram corrigidos: contraste do rodapé e streaming antecipado na página inexistente.
+- `pnpm test:e2e`: 7 cenários passaram, reutilizando o servidor local com `E2E_EXTERNAL_SERVER=true`. Cobrem navegação pública, busca, categoria, detalhes, links, ausência de navegação automática, 404, bloqueio de admin, menu mobile, overflow e axe nas quatro larguras. Os ajustes observados foram corrigidos: contraste do rodapé e streaming antecipado na página inexistente.
 - Open Graph: resposta HTTP 200 com `image/png`.
 - Revisão visual: capturas de desktop e celular inspecionadas.
 

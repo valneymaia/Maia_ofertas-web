@@ -29,11 +29,11 @@ const items = [
   },
 ];
 const sql =
-  '-- Carga opcional: dois produtos e links reais fornecidos pelo proprietário.\n-- Aplicar após as migrations; não contém preços nem imagens de terceiros.\nbegin;\n' +
+  '-- Carga opcional: dois produtos e links reais fornecidos pelo proprietário.\n-- Aplicar após todas as migrations; imagens por URL original da Amazon.\nbegin;\n' +
   items
     .map(
       (p, i) =>
-        `insert into public.products(title,slug,summary,description,asin,affiliate_url,category_id,is_featured,status)\nselect ${[p.title, p.slug, p.summary, p.description, p.asin, links[i].affiliate_url].map(quote).join(',')}, id, true, 'published' from public.categories where slug = ${quote(p.category)}\non conflict(slug) do nothing;`,
+        `insert into public.products(title,slug,summary,description,asin,affiliate_url,image_url,image_source,category_id,is_featured,status)\nselect ${[p.title, p.slug, p.summary, p.description, p.asin, links[i].affiliate_url, links[i].image_url, 'amazon_metadata'].map(quote).join(',')}, id, true, 'published' from public.categories where slug = ${quote(p.category)}\non conflict(slug) do update set image_url = excluded.image_url, image_source = excluded.image_source;`,
     )
     .join('\n') +
   '\ncommit;\n';

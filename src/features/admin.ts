@@ -2,6 +2,7 @@ import 'server-only';
 import { requireAdmin } from '@/lib/auth';
 import { categorySchema, productSchema } from '@/lib/validators';
 import { resolveAffiliateUrl } from '@/lib/resolve-affiliate';
+import { fetchAmazonProductImage } from '@/lib/amazon-image';
 import type { Product, Category } from '@/types/domain';
 
 export async function listAdminProducts(): Promise<Product[]> {
@@ -23,7 +24,14 @@ export async function listAdminCategories(): Promise<Category[]> {
 export async function saveProduct(input: Record<string, unknown>, id?: string) {
   const { db } = await requireAdmin();
   const affiliate_url = await resolveAffiliateUrl(String(input.affiliate_url || ''));
-  const parsed = productSchema.safeParse({ ...input, affiliate_url });
+  let image_url = input.image_url;
+  let image_source = input.image_source;
+  if (input.fetch_image === true && !image_url) {
+    const detected = await fetchAmazonProductImage(affiliate_url);
+    image_url = detected || '';
+    image_source = detected ? 'amazon_metadata' : 'placeholder';
+  }
+  const parsed = productSchema.safeParse({ ...input, affiliate_url, image_url, image_source });
   if (!parsed.success)
     return {
       error: parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join(' · '),

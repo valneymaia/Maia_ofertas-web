@@ -12,6 +12,7 @@ export default async function ProtectedLayout({ children }: { children: React.Re
         <nav aria-label="Administração">
           <Link href="/admin">Visão geral</Link>
           <Link href="/admin/produtos">Produtos</Link>
+          <Link href="/admin/anuncios">Gerar anúncios</Link>
           <Link href="/admin/categorias">Categorias</Link>
           <Link href="/">Ver vitrine ↗</Link>
         </nav>

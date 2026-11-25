@@ -13,7 +13,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Abra [localhost:3000](http://localhost:3000). Sem Supabase, o desenvolvimento local exibe os **dois produtos reais fornecidos pelo proprietário**, com links previamente expandidos e tag original `valneymaia05-20`. Essa carga não é um banco editável: o painel informa que precisa do Supabase.
+Abra [localhost:3000](http://localhost:3000). Sem Supabase, o desenvolvimento local exibe os **quatro produtos da carga inicial**, com links Amazon e tag `maiaofertas0a-20`. Essa carga não é um banco editável: o painel informa que precisa do Supabase.
 
 Para dados fictícios de layout, crie `.env.local` com `DEMO_MODE=true`. A demonstração exibe um aviso e desativa links de compra. **DEMO_MODE é recusado em produção.**
 
@@ -22,7 +22,7 @@ Para dados fictícios de layout, crie `.env.local` com `DEMO_MODE=true`. A demon
 1. Crie um projeto Supabase sob sua conta.
 2. Copie `.env.example` para `.env.local`. Preencha `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` e `NEXT_PUBLIC_SITE_URL` (local: `http://localhost:3000`). A chave é a pública `anon`, nunca `service_role`.
 3. No SQL Editor, execute os arquivos de `supabase/migrations/` em ordem: `202611180001_catalog.sql` e depois `202611180002_amazon_metadata_images.sql`. Alternativamente, com Supabase CLI instalada: `supabase link --project-ref SEU_PROJECT_REF` e `supabase db push`.
-4. **Opcional:** execute `supabase/seed.sql` para publicar os dois produtos enviados nesta solicitação. As URLs completas mantêm os parâmetros e a tag originais. As imagens usam os endereços originais da Amazon; não são baixadas para o servidor. Não contém preços.
+4. **Opcional:** execute `supabase/seed.sql` para publicar os quatro produtos da carga inicial. As URLs mantêm a tag de associado. As imagens usam endereços originais da Amazon quando disponíveis; não são baixadas para o servidor. Não contém preços.
 5. Em Authentication → Users, crie manualmente seu usuário administrador com e-mail e senha. Desative cadastros públicos em Authentication → Providers → Email se não forem usados por outros serviços do projeto.
 6. Copie o UUID desse usuário e conceda acesso no SQL Editor:
 
@@ -36,7 +36,7 @@ Não existe cadastro público de administradores. Não há chave privilegiada na
 
 ## Cadastrar seus próximos links
 
-No painel, escolha **Produtos → Cadastrar produto**. Informe título, slug, resumo e descrição originais; cole o link oficial completo ou `https://link.amazon/...` / `https://amzn.to/...`; escolha uma categoria. Salve como rascunho ou publique.
+No painel, escolha **Gerar anúncios** para colar um link, informar o nome e a categoria e criar um texto inicial editável como rascunho. Você também pode abrir **Produtos → Cadastrar produto** para preencher todos os campos manualmente. Links `https://link.amazon/...` e `https://amzn.to/...` são verificados no servidor.
 
 O servidor verifica até cinco saltos de encurtadores permitidos, com timeout por requisição, e só aceita um destino de produto HTTPS na Amazon Brasil com tag de associado. A URL final completa fica no banco; o botão público leva diretamente a ela. Não há requisição para resolver links durante a visita ao catálogo.
 

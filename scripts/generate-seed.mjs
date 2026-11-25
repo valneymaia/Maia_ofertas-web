@@ -27,14 +27,38 @@ const items = [
     description:
       'Considere o tamanho do ambiente e a orientação de um profissional para dimensionar a capacidade necessária. Confira na Amazon a especificação exata do modelo, a voltagem, os itens incluídos e as condições de instalação e garantia.',
   },
+  {
+    title: 'Placa-mãe MSI B550M-A PRO AMD B550 AM4 Micro ATX DDR4',
+    slug: 'placa-mae-msi-b550m-a-pro',
+    asin: 'B08MWFDPMS',
+    category: 'informatica',
+    summary:
+      'Uma opção de placa-mãe para montar ou atualizar um computador com processadores AMD AM4. Confira a compatibilidade dos componentes na Amazon.',
+    description:
+      'A MSI B550M-A PRO usa o chipset AMD B550 e formato Micro ATX. Antes de escolher, confira a compatibilidade com o processador, a memória, o gabinete e os demais componentes. Consulte na Amazon a ficha e as condições atuais do anúncio.',
+  },
+  {
+    title: 'Sony PlayStation 5 Edição Digital 825GB com 1 Controle Branco',
+    slug: 'playstation-5-edicao-digital-825gb-branco',
+    asin: 'B0GWNKJDCZ',
+    category: 'eletronicos',
+    summary:
+      'Console PlayStation 5 Edição Digital com armazenamento de 825 GB e controle branco. Confira os itens e detalhes da edição na Amazon.',
+    description:
+      'Esta edição digital do PlayStation 5 tem SSD de 825 GB e acompanha um controle sem fio DualSense branco. Confira na Amazon os itens incluídos, a compatibilidade dos jogos e as condições do vendedor antes de comprar.',
+  },
 ];
 const sql =
-  '-- Carga opcional: dois produtos e links reais fornecidos pelo proprietário.\n-- Aplicar após todas as migrations; imagens por URL original da Amazon.\nbegin;\n' +
+  '-- Carga opcional: quatro produtos e links reais fornecidos pelo proprietário.\n-- Aplicar após todas as migrations; imagens por URL original da Amazon quando disponíveis.\nbegin;\n' +
   items
-    .map(
-      (p, i) =>
-        `insert into public.products(title,slug,summary,description,asin,affiliate_url,image_url,image_source,category_id,is_featured,status)\nselect ${[p.title, p.slug, p.summary, p.description, p.asin, links[i].affiliate_url, links[i].image_url, 'amazon_metadata'].map(quote).join(',')}, id, true, 'published' from public.categories where slug = ${quote(p.category)}\non conflict(slug) do update set image_url = excluded.image_url, image_source = excluded.image_source;`,
-    )
+    .map((p, i) => {
+      const imageUrl = links[i].image_url ? quote(links[i].image_url) : 'null';
+      const imageSource = links[i].image_url ? 'amazon_metadata' : 'placeholder';
+      const fields = [p.title, p.slug, p.summary, p.description, p.asin, links[i].affiliate_url]
+        .map(quote)
+        .join(',');
+      return `insert into public.products(title,slug,summary,description,asin,affiliate_url,image_url,image_source,category_id,is_featured,status)\nselect ${fields}, ${imageUrl}, ${quote(imageSource)}, id, true, 'published' from public.categories where slug = ${quote(p.category)}\non conflict(slug) do update set affiliate_url = excluded.affiliate_url, image_url = excluded.image_url, image_source = excluded.image_source;`;
+    })
     .join('\n') +
   '\ncommit;\n';
 writeFileSync(new URL('../supabase/seed.sql', import.meta.url), sql);

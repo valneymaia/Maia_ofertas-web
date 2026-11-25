@@ -242,6 +242,16 @@ small {
   gap: 7px;
   align-items: center;
 }
+.header-admin-link {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--orange);
+  color: var(--navy);
+  font-weight: 700;
+}
+.header-admin-link:hover {
+  background: var(--orange-bright);
+}
 .mobile-nav {
   display: none;
 }

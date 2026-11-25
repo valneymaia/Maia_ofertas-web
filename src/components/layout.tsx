@@ -51,6 +51,9 @@ export function SiteHeader() {
           <SearchBar />
           <nav className="desktop-nav" aria-label="Navegação principal">
             <Link href="/ofertas">Explorar ofertas</Link>
+            <Link href="/admin/login" className="header-admin-link">
+              Entrar
+            </Link>
             {telegram && (
               <a href={telegram} className="telegram-link" target="_blank" rel="noopener">
                 <Send size={16} /> Nosso Telegram
@@ -62,6 +65,7 @@ export function SiteHeader() {
             <nav aria-label="Navegação mobile">
               <Link href="/ofertas">Explorar ofertas</Link>
               <Link href="/sobre">Sobre o MaiaOfertas</Link>
+              <Link href="/admin/login">Entrar no painel</Link>
               {telegram && <a href={telegram}>Nosso Telegram</a>}
             </nav>
           </details>

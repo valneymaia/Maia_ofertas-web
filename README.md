@@ -30,7 +30,7 @@ Para dados fictícios de layout, crie `.env.local` com `DEMO_MODE=true`. A demon
 insert into public.admin_users(user_id) values ('UUID-DO-SEU-USUARIO');
 ```
 
-7. Reinicie `pnpm dev` e entre em [admin/login](http://localhost:3000/admin/login).
+7. Reinicie `pnpm dev` e entre pelo botão **Entrar** no menu do site ou abra [admin/login](http://localhost:3000/admin/login). Depois do login, use **Gerar anúncios** no menu do painel.
 
 Não existe cadastro público de administradores. Não há chave privilegiada na aplicação. Remova uma concessão com `delete from public.admin_users where user_id = 'UUID';`.
 

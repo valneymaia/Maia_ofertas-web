@@ -21,15 +21,15 @@ test('homepage, busca, categoria e link direto sem navegação automática', asy
   await page.getByLabel('Buscar produtos').fill('PlayStation');
   await page.getByRole('button', { name: 'Buscar', exact: true }).click();
   await expect(page).toHaveURL(/q=PlayStation/);
-  await expect(page.getByRole('heading', { name: /PlayStation 5/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /PlayStation 5 Slim Digital/ })).toBeVisible();
   await page
-    .getByRole('heading', { name: /PlayStation 5/ })
+    .getByRole('heading', { name: /PlayStation 5 Slim Digital/ })
     .getByRole('link')
     .click();
   const link = page.getByRole('link', { name: /Ver na Amazon/ }).first();
   await expect(link).toHaveAttribute(
     'href',
-    /https:\/\/www\.amazon\.com\.br\/.*tag=valneymaia05-20/,
+    /https:\/\/www\.amazon\.com\.br\/.*tag=maiaofertas0a-20/,
   );
   await expect(link).toHaveAttribute('rel', 'sponsored nofollow noopener');
   expect(outbound).toBe(0);

@@ -245,7 +245,7 @@ small {
 .header-admin-link {
   padding: 10px 14px;
   border-radius: 8px;
-  background: var(--orange);
+  background: var(--orange-bright);
   color: var(--navy);
   font-weight: 700;
 }
